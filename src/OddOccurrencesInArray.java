@@ -1,10 +1,15 @@
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+
 public class OddOccurrencesInArray {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
-		int[] input = {9,9,9,3,9,3,9,7,9,3,3};
+		int[] input = {9,3,9,3,9,7,9};
 		
 		int result = solution(input);
 		
@@ -13,37 +18,28 @@ public class OddOccurrencesInArray {
 	}
 	
 	public static int solution(int[] A) {
-		int unpaired = 0;
-		//int currentIndex = 0;
+		Map<Integer, Integer> arrayElementAndCount = new HashMap<>();
 		
-		for (int i = 0; i < A.length; i++) {
-			//unpaired = A[i];
-			//currentIndex = i;
-			boolean finished = false;
-			
-			for (int j = i+1; j < A.length && !finished; j++) {
-				if (A[i] == 0) { 
-					finished = true;
-					}
-					
-				if (A[i] == A[j]) {
-					//unpaired = 0;
-					A[i] = 0;
-					A[j] = 0;
-					finished = true;
-				}
-				
-			}
-			
-		}
-		
-		for (int z = 0; z < A.length; z++) {
-			if (A[z] != 0) {
-				unpaired = A[z];
-				//return A[z];
+		//build hash table with count of occurrence.
+		for (int element : A) {
+			Integer occurrence = arrayElementAndCount.get(element);
+			if (occurrence == null) {
+				arrayElementAndCount.put(element,1);
+			} else {
+				arrayElementAndCount.put(element,++occurrence);
 			}
 		}
-		return unpaired;
+		
+		int oddOccurrenceNumber = 0;
+		
+		Set<Entry<Integer, Integer>> entrySet = arrayElementAndCount.entrySet();
+		for (Entry<Integer, Integer> entry : entrySet) {
+			
+			if (entry.getValue() % 2 != 0) {
+				oddOccurrenceNumber = entry.getKey();
+			}
+		}
+		
+		return oddOccurrenceNumber;
 	}
-
 }
